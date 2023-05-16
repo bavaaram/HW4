@@ -32,6 +32,13 @@ class User:
 
     @classmethod
     def signup(cls):
+        """
+        This function is for Signing up users.
+        first user must enter username, then enter password
+        and finally enter phone number
+        if signing up was finished correctly, the signing up
+        completion massage is appear
+        """
         print("Welcome to signup page")
         print("\n*****************************\n")
         username = input("Enter username: ")
