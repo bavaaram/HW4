@@ -1,5 +1,9 @@
 #1 /usr/bin/python3
 
+import uuid
+import hashlib
+import getpass
+
 class User:
     """
     This class is use for modeling users and some functionality/
@@ -43,6 +47,10 @@ class User:
 
     @staticmethod
     def password_check(passwd):
+        """
+        This function actually check the password and if its length smaller
+        than 4, an ValueError raised with the too short massage
+        """
         if len(passwd) < 4:
             return False
         return True
@@ -55,4 +63,13 @@ class User:
     def __password(self, passwd_value):
         if not User.password_check(passwd_value):
             raise ValueError("Too short Password! ")
+
+    @staticmethod
+    def uuid_gen(name):
+        """
+        This function generate a universal unique identifier with uuid5
+        and use MD5 Hash algorithm
+        """
+        x_uuid = uuid.uuid1()
+        return uuid.uuid5(x_uuid, name)
 
