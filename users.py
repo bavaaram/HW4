@@ -4,6 +4,7 @@ import uuid
 import hashlib
 import getpass
 
+
 class User:
     """
     This class is use for modeling users and some functionality/
@@ -14,7 +15,7 @@ class User:
     also user can enter his/her phone number and if phone number not entered,
      it assuming to None
     """
-    all, all_usernames = [], []
+    all_users, all_usernames, all_ids = [], [], []
 
     def __init__(self, username: str, password: str, phone_number: str = None):
         """
@@ -22,7 +23,10 @@ class User:
         """
         self.username, self.__password = username, password
         self.phone_number = phone_number
-        User.all.append(self)
+        self.user_id = User.uuid_gen(username)
+        User.all_users.append(self)
+        User.all_usernames.append(username)
+        User.all_ids.append(self.user_id)
 
     @staticmethod
     def username_check(user_name: str) -> bool:
@@ -73,3 +77,19 @@ class User:
         x_uuid = uuid.uuid1()
         return uuid.uuid5(x_uuid, name)
 
+
+def main():
+    """
+    This is main function of our module
+    """
+    user1 = User("Matin", "12345678", phone_number="09197951537")
+    user2 = User("Saman", "qwerty")
+    user3 = User("Mehdi", "zxcvbnm")
+    print(user1.username, user2.username, user3.username, sep="****")
+    print(User.all_users)
+    print(User.all_usernames)
+    print(User.all_ids)
+
+
+if __name__ == "__main__":
+    main()
