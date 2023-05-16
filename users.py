@@ -28,6 +28,18 @@ class User:
         User.all_usernames.append(username)
         User.all_ids.append(self.user_id)
 
+    dictionary = {}
+
+    @classmethod
+    def signup(cls):
+        print("Welcome to signup page")
+        print("\n*****************************\n")
+        username = input("Enter username: ")
+        password = input("Enter Password: ")
+        phone_number = input("Enter phone number(Optional): ")
+        obj = cls(username, password, phone_number)
+        User.dictionary[username] = obj
+
     @staticmethod
     def username_check(user_name: str) -> bool:
         """
