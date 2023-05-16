@@ -40,3 +40,9 @@ class User:
     def username(self, user_value):
         if not User.username_check(user_value):
             raise ValueError("Username is already taken! ")
+
+    @staticmethod
+    def password_check(passwd):
+        if len(passwd) < 4:
+            return False
+        return True
