@@ -28,6 +28,18 @@ class User:
         User.all_usernames.append(username)
         User.all_ids.append(self.user_id)
 
+    def __str__(self):
+        return f"Username: {self.username}\nPhone number: {self.phone_number}\nUser ID: {self.user_id}"
+
+    def sign_in_validation(self, user_name, passwd):
+        if user_name not in User.all_usernames:
+            raise ValueError("Username not found! ")
+        if (user_name == self.username) and (passwd == self.__password):
+            print("Signing in Completed! ")
+            return True
+        print("Wrong Password! ")
+        return False
+
     dictionary = {}
 
     @classmethod
@@ -48,6 +60,9 @@ class User:
         User.dictionary[username] = obj
         print("\nSignup Completed! ")
 
+    def representation(self):
+        print(self.__str__)
+
     @staticmethod
     def username_check(user_name: str) -> bool:
         """
@@ -56,6 +71,17 @@ class User:
         if user_name in User.all_usernames:
             return False
         return True
+
+    def edit_user(self, usr_name=None, ph_numb=None):
+        if usr_name is not None:
+            self.username = usr_name
+        if ph_numb is not None:
+            self.phone_number = ph_numb
+
+    def passwd_change(self, old_pass, new_pass, repeat_new_pass):
+        if (old_pass != self.__password) or (new_pass != repeat_new_pass):
+            raise ValueError("Invalid old Password of not mathc new passwords")
+        self.__password = new_pass
 
     @property
     def username(self):
