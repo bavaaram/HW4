@@ -43,21 +43,14 @@ class User:
     dictionary = {}
 
     @classmethod
-    def signup(cls):
+    def signup(cls, user_name, passwd, ph_numb):
         """
         This function is for Signing up users.
         first user must enter username, then enter password
         and finally enter phone number
-        if signing up was finished correctly, the signing up
-        completion massage is appear
         """
-        print("Welcome to signup page")
-        print("\n*****************************\n")
-        username = input("Enter username: ")
-        password = input("Enter Password: ")
-        phone_number = input("Enter phone number(Optional): ")
-        obj = cls(username, password, phone_number)
-        User.dictionary[username] = obj
+        obj = cls(user_name, passwd, ph_numb)
+        User.dictionary[user_name] = obj
         print("\nSignup Completed! ")
 
     def representation(self):
