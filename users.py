@@ -46,3 +46,13 @@ class User:
         if len(passwd) < 4:
             return False
         return True
+
+    @property
+    def __password(self):
+        return self.__password
+
+    @__password.setter
+    def __password(self, passwd_value):
+        if not User.password_check(passwd_value):
+            raise ValueError("Too short Password! ")
+
