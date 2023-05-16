@@ -81,6 +81,9 @@ class User:
 
     @property
     def __password(self):
+        """
+        Getter for password
+        """
         return self.__password
 
     @__password.setter
