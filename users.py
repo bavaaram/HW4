@@ -39,6 +39,7 @@ class User:
         phone_number = input("Enter phone number(Optional): ")
         obj = cls(username, password, phone_number)
         User.dictionary[username] = obj
+        print("\nSignup Completed! ")
 
     @staticmethod
     def username_check(user_name: str) -> bool:
