@@ -77,7 +77,7 @@ class User:
         print wrong password error.
         """
         if user_name not in User.all_usernames:
-            raise ValueError("Username not found! ")
+            raise UserError("Username not found! ")
         if (user_name == self.username) and (passwd == self.password):
             print("Signing in Completed! ")
             return True
@@ -134,7 +134,7 @@ class User:
         raise an error.
         """
         if (old_pass != self.password) or (new_pass != repeat_new_pass):
-            raise ValueError("Invalid old Password of not match new passwords")
+            raise TwoPasswordError("Invalid Password or unmatch new passwords")
         self.password = new_pass
 
     @property
@@ -147,7 +147,7 @@ class User:
     @username.setter
     def username(self, user_value):
         if not User.username_check(user_value):
-            raise ValueError("Username is already taken! ")
+            raise RepUserError("Username is already taken! ")
         self._username = user_value
 
     @staticmethod
@@ -170,7 +170,7 @@ class User:
     @password.setter
     def password(self, passwd_value):
         if not User.password_check(passwd_value):
-            raise ValueError("Too short Password! ")
+            raise ShortPasswordError("Too short Password! ")
         self.__password = passwd_value
 
     @staticmethod
