@@ -1,8 +1,6 @@
 # 1 /usr/bin/python3
 
 import uuid
-import hashlib
-import getpass
 
 
 class ShortPasswordError(Exception):
@@ -66,17 +64,13 @@ class User:
         """
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
 
-    def sign_in_check(self, user_name, passwd):
+    def password_login_check(self, passwd):
         """
-        This function is for signing in check
-        if entered username and password/
-        are match with original username and
-        password, print Signing in Completed
-        else print Wrong password
+        this method is used for password check
+        if entered password is not equal to/
+        real password, an error raised
         """
-        if (user_name == self.username) and (passwd == self.password):
-            print("Signing In Completed! ")
-        else:
+        if not passwd == self.password:
             raise PasswordError("Wrong Password! ")
 
     @classmethod
@@ -96,8 +90,9 @@ class User:
             raise UserError("Username not found! ")
         for usr in cls.all_usernames:
             if user_name == usr:
-                cls_obj = cls.dictionary[user_name]
-        cls_obj.sign_in_check(user_name, passwd)
+                cls_obj = User.get_obj(user_name)
+        cls_obj.password_login_check(passwd)
+        return cls_obj
 
     dictionary = {}
 
@@ -109,8 +104,16 @@ class User:
         and finally enter phone number
         """
         obj = cls(user_name, passwd, ph_numb)
-        User.dictionary[user_name] = obj
-        print("\nSignup Completed! ")
+        User.dictionary[obj] = user_name
+
+    @staticmethod
+    def get_obj(user_name: str):
+        """
+        This method is used for getting every user object with its username.
+        """
+        for obj in User.all_users:
+            if obj.username == user_name:
+                return obj
 
     def representation(self):
         """
@@ -138,20 +141,25 @@ class User:
         """
         if usr_name in User.all_usernames:
             raise RepUserError("Username already Taken! ")
-        if usr_name is not None:
+        if usr_name != "":
+            User.all_usernames.remove(self.username)
             self.username = usr_name
-        if ph_numb is not None:
+            User.all_usernames.append(self.username)
+            User.dictionary[self] = usr_name
+        if ph_numb != "":
             self.phone_number = ph_numb
 
-    def passwd_change(self, old_pass: str, new_pass: str, repeat_new_pass: str):
+    def passwd_change(self, old_pass: str, new_pass: str, rep_new_pass: str):
         """
         This function is for password changing.
         if entered old password in not match to original password/
         or new password and Repeat it not match together/
         raise an error.
         """
-        if (old_pass != self.password) or (new_pass != repeat_new_pass):
-            raise TwoPasswordError("Invalid Password or unmatch new passwords")
+        if old_pass != self.password:
+            raise PasswordError("Wrong original Password! ")
+        if new_pass != rep_new_pass:
+            raise TwoPasswordError("Unmatched new passwords")
         self.password = new_pass
 
     @property
