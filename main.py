@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-from users import User,UserError, PasswordError, TwoPasswordError, ShortPasswordError, RepUserError
+from users import User, UserError, PasswordError, TwoPasswordError, ShortPasswordError, RepUserError
 
 
 while 1:
@@ -10,11 +10,7 @@ while 1:
         print("Invalid State! ")
         continue
 
-    if stat == "0":
-        print("Exiting the User Management Panel... ")
-        break
-
-    elif stat == "1":
+    if stat == "1":
         try:
             username = input("Enter Username: ")
             password = input("Enter Password: ")
@@ -42,7 +38,7 @@ while 1:
             stat = input("Stat (1(Show User Information) - 2(Edit) - 3(Password Change) - 4(Back to Main Menu)):   ")
 
             if stat == "1":
-                user_object = User.representation()
+                user_object.representation()
 
             elif stat == "2":
                 print("\n********** ^ Edit User information mode ^ **********\n")
@@ -75,6 +71,10 @@ while 1:
             else:
                 print("\nInvalid State! ")
                 continue
+
+    elif stat == "0":
+        print("Exiting the User Management Panel... ")
+        break
 
     else:
         print("\nInvalid State! ")
