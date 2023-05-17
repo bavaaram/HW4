@@ -58,9 +58,24 @@ class User:
         User.all_ids.append(self.user_id)
 
     def __str__(self):
+        """
+        This is a __str__ magic method for/
+        returning user Information as a string
+        """
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
 
     def sign_in_validation(self, user_name, passwd):
+        """
+        This method is for sign in validation/
+        and give username and password/
+        if given username not in usernames list/
+        rasing an Error that says Username not found
+        and if entered username and password is/
+        match to self.username and self.password
+        printing sign in complete,/
+        else if entered password is not match/
+        print wrong password error.
+        """
         if user_name not in User.all_usernames:
             raise ValueError("Username not found! ")
         if (user_name == self.username) and (passwd == self.password):
@@ -83,6 +98,10 @@ class User:
         print("\nSignup Completed! ")
 
     def representation(self):
+        """
+        This method actually print User Information/
+        with __str__ magic method
+        """
         print(self)
 
     @staticmethod
@@ -95,14 +114,27 @@ class User:
         return True
 
     def edit_user(self, usr_name=None, ph_numb=None):
+        """
+        This method is used for username and/
+        phone number editing
+        if given username or phone number in not None/
+        , assigning given username and phone number/
+        to this instance Attributes
+        """
         if usr_name is not None:
             self.username = usr_name
         if ph_numb is not None:
             self.phone_number = ph_numb
 
     def passwd_change(self, old_pass, new_pass, repeat_new_pass):
+        """
+        This function is for password changing.
+        if entered old password in not match to original password/
+        or new password and Repeat it not match together/
+        raise an error.
+        """
         if (old_pass != self.password) or (new_pass != repeat_new_pass):
-            raise ValueError("Invalid old Password of not mathc new passwords")
+            raise ValueError("Invalid old Password of not match new passwords")
         self.password = new_pass
 
     @property
