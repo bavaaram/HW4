@@ -37,6 +37,12 @@ while 1:
         except PasswordError:
             print("Wrong Password! ")
 
+        while 1:
+            print("\n************** - User Dashboard - **************\n")
+            stat = input("Stat (1(Show User Information) - 2(Edit) - 3(Password Change) - 4(Back to Main Menu)):   ")
+
+            if stat == "1":
+                user_object = User.representation()
 
 
 
