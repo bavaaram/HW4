@@ -14,7 +14,7 @@ while 1:
         print("Exiting the User Management Panel... ")
         break
 
-    if stat == "1":
+    elif stat == "1":
         try:
             username = input("Enter Username: ")
             password = input("Enter Password: ")
@@ -24,3 +24,7 @@ while 1:
             print("Username Already Taken! ")
         except ShortPasswordError:
             print("Too Short Password! ")
+
+
+
+
