@@ -55,4 +55,17 @@ while 1:
                     print("Username already Taken! ")
                     print("\nUser Information has been Updated! ")
 
+            elif stat == "3":
+                print("\n********** ^ Password Change ^ **********\n")
+                try:
+                    old_pass = input("Enter Old Password: ")
+                    new_pass = input("Enter New Password: ")
+                    rep_new_pass = input("Enter New Password again: ")
+                    user_object.passwd_change(old_pass, new_pass, rep_new_pass)
+                except ShortPasswordError:
+                    print("Too short password! ")
+                except TwoPasswordError:
+                    print("Two new passwords are not matched! ")
+                print("\nYour Password has been changed! ")
+
 
