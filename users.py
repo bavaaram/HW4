@@ -83,7 +83,7 @@ class User:
         print("\nSignup Completed! ")
 
     def representation(self):
-        print(self.__str__)
+        print(self)
 
     @staticmethod
     def username_check(user_name: str) -> bool:
