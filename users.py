@@ -63,7 +63,7 @@ class User:
         returning user Information as a string
         """
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
-    
+
     def sign_in_check(self, user_name, passwd):
         if (user_name == self.username) and (passwd == self.password):
             print("Signing In Completed! ")
@@ -119,7 +119,9 @@ class User:
             return False
         return True
 
-    def edit_user(self, original_username: str, usr_name: str = None, ph_numb: str = None):
+    def edit_user(
+        self, original_username: str, usr_name: str = None, ph_numb: str = None
+    ):
         """
         This method is used for username and/
         phone number editing
