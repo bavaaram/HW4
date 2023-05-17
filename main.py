@@ -68,4 +68,14 @@ while 1:
                     print("Two new passwords are not matched! ")
                 print("\nYour Password has been changed! ")
 
+            elif stat == "4":
+                print("\nExiting User Panel...")
+                break
 
+            else:
+                print("\nInvalid State! ")
+                continue
+
+    else:
+        print("\nInvalid State! ")
+        continue
