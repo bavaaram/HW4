@@ -17,47 +17,57 @@ while 1:
     except NameError:
         print("\nInvalid State! ")
         continue
+    if stat == "5":
+        print(User.all_usernames, end="\n\n")
+        for i, j in User.dictionary.items():
+            print(j, i, sep="\t")
 
-    if stat == "1":
+    elif stat == "1":
         print("\n********** ^ Sign up form ^ **********\n")
         try:
             username = input("Enter Username: ")
             password = input("Enter Password: ")
             phone_number = input("Enter Phone number(Optional): ")
             User.signup(username, password, phone_number)
-        except UserError:
+        except RepUserError:
             print("\nUsername Already Taken! ")
         except ShortPasswordError:
             print("\nToo Short Password! ")
+        else:
+            print("\nSigning Up Completed! ")
 
     elif stat == "2":
         print("\n************** - Login form - **************\n")
         try:
             username = input("Enter Username: ")
             password = input("Enter Password: ")
-            User.sign_in_validation(username, password)
-            user_object = User.dictionary[username]
+            USER_OBJECT = User.sign_in_validation(username, password)
         except UserError:
             print("\nUsername not Found! ")
+            continue
         except PasswordError:
             print("\nWrong Password! ")
+            continue
+        else:
+            print("Signing In Completed! ")
 
         while 1:
             print("\n************** - User Dashboard - **************\n")
             stat = input("Stat (1(Show User Information) - 2(Edit) - 3(Password Change) - 4(Back to Main Menu)):   ")
 
             if stat == "1":
-                user_object.representation()
+                USER_OBJECT.representation()
 
             elif stat == "2":
-                print("\n********** ^ Edit User information mode ^ **********\n")
-                print("if you dont want to change any item, just leave it and press Enter.\n")
+                print("\n******** ^ Edit User information mode ^ ********\n")
+                print("if you dont want to change any item, leave it and press Enter.\n")
                 try:
                     new_username = input("Enter New Username: ")
                     new_phone_number = input("Enter New Phone Number")
-                    user_object.edit_user(new_username, new_phone_number)
+                    USER_OBJECT.edit_user(new_username, new_phone_number)
                 except RepUserError:
                     print("\nUsername already Taken! ")
+                else:
                     print("\nUser Information has been Updated! ")
 
             elif stat == "3":
@@ -66,12 +76,15 @@ while 1:
                     old_pass = input("Enter Old Password: ")
                     new_pass = input("Enter New Password: ")
                     rep_new_pass = input("Enter New Password again: ")
-                    user_object.passwd_change(old_pass, new_pass, rep_new_pass)
-                except ShortPasswordError:
-                    print("\nToo short password! ")
+                    USER_OBJECT.passwd_change(old_pass, new_pass, rep_new_pass)
+                except PasswordError:
+                    print("Wrong Original Password! ")
                 except TwoPasswordError:
                     print("\nTwo new passwords are not matched! ")
-                print("\nYour Password has been changed! ")
+                except ShortPasswordError:
+                    print("Two Short New Password! ")
+                else:
+                    print("\nYour Password has been changed! ")
 
             elif stat == "4":
                 print("\nExiting User Panel...")
