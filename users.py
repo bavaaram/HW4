@@ -129,16 +129,17 @@ class User:
         return True
 
     @property
-    def __password(self):
+    def password(self):
         """
         Getter for password
         """
         return self.__password
 
-    @__password.setter
-    def __password(self, passwd_value):
+    @password.setter
+    def password(self, passwd_value):
         if not User.password_check(passwd_value):
             raise ValueError("Too short Password! ")
+        self.__password = passwd_value
 
     @staticmethod
     def uuid_gen(name):
