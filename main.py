@@ -44,5 +44,15 @@ while 1:
             if stat == "1":
                 user_object = User.representation()
 
+            elif stat == "2":
+                print("\n********** ^ Edit User information mode ^ **********\n")
+                print("if you dont want to change any item, just leave it and press Enter.\n")
+                try:
+                    new_username = input("Enter New Username: ")
+                    new_phone_number = input("Enter New Phone Number")
+                    user_object.edit_user(username, new_username, new_phone_number)
+                except RepUserError:
+                    print("Username already Taken! ")
+                    print("\nUser Information has been Updated! ")
 
 
