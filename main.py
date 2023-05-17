@@ -55,7 +55,7 @@ while 1:
                 try:
                     new_username = input("Enter New Username: ")
                     new_phone_number = input("Enter New Phone Number")
-                    user_object.edit_user(username, new_username, new_phone_number)
+                    user_object.edit_user(new_username, new_phone_number)
                 except RepUserError:
                     print("\nUsername already Taken! ")
                     print("\nUser Information has been Updated! ")
