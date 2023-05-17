@@ -58,12 +58,12 @@ class User:
         User.all_ids.append(self.user_id)
 
     def __str__(self):
-        return f"Username: {self.username}\nPhone number: {self.phone_number}\nUser ID: {self.user_id}"
+        return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
 
     def sign_in_validation(self, user_name, passwd):
         if user_name not in User.all_usernames:
             raise ValueError("Username not found! ")
-        if (user_name == self.username) and (passwd == self.__password):
+        if (user_name == self.username) and (passwd == self.password):
             print("Signing in Completed! ")
             return True
         print("Wrong Password! ")
@@ -101,9 +101,9 @@ class User:
             self.phone_number = ph_numb
 
     def passwd_change(self, old_pass, new_pass, repeat_new_pass):
-        if (old_pass != self.__password) or (new_pass != repeat_new_pass):
+        if (old_pass != self.password) or (new_pass != repeat_new_pass):
             raise ValueError("Invalid old Password of not mathc new passwords")
-        self.__password = new_pass
+        self.password = new_pass
 
     @property
     def username(self):
