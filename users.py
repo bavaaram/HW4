@@ -1,8 +1,36 @@
-#1 /usr/bin/python3
+# 1 /usr/bin/python3
 
 import uuid
-import hashlib
-import getpass
+
+
+class ShortPasswordError(Exception):
+    """
+    I use this Error when Short Password has been Entered.
+    """
+
+
+class PasswordError(Exception):
+    """
+    I use this Error when Wrong Password has been Entered.
+    """
+
+
+class UserError(Exception):
+    """
+    I use this Error When Wrong Username has been Entered.
+    """
+
+
+class RepUserError(Exception):
+    """
+    I use this Error When Repetitious Username has been Entered.
+    """
+
+
+class TwoPasswordError(Exception):
+    """
+    I use this Error When two New Passwords are not Match.
+    """
 
 
 class User:
@@ -15,6 +43,7 @@ class User:
     also user can enter his/her phone number and if phone number not entered,
      it assuming to None
     """
+
     all_users, all_usernames, all_ids = [], [], []
 
     def __init__(self, username: str, password: str, phone_number: str = None):
