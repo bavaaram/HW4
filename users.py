@@ -50,7 +50,7 @@ class User:
         """
         The __init__ method for assigning attributes
         """
-        self.username, self.__password = username, password
+        self.username, self.password = username, password
         self.phone_number = phone_number
         self.user_id = User.uuid_gen(username)
         User.all_users.append(self)
@@ -110,12 +110,13 @@ class User:
         """
         Getter for Username
         """
-        return self.username
+        return self._username
 
     @username.setter
     def username(self, user_value):
         if not User.username_check(user_value):
             raise ValueError("Username is already taken! ")
+        self._username = user_value
 
     @staticmethod
     def password_check(passwd):
