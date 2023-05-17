@@ -63,8 +63,15 @@ class User:
         returning user Information as a string
         """
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
+    
+    def sign_in_check(self, user_name, passwd):
+        if (user_name == self.username) and (passwd == self.password):
+            print("Signing In Completed! ")
+        else:
+            raise PasswordError("Wrong Password! ")
 
-    def sign_in_validation(self, user_name: str, passwd: str) -> bool:
+    @classmethod
+    def sign_in_validation(cls, user_name: str, passwd: str) -> bool:
         """
         This method is for sign in validation/
         and give username and password/
@@ -76,13 +83,12 @@ class User:
         else if entered password is not match/
         print wrong password error.
         """
-        if user_name not in User.all_usernames:
+        if user_name not in cls.all_usernames:
             raise UserError("Username not found! ")
-        if (user_name == self.username) and (passwd == self.password):
-            print("Signing in Completed! ")
-            return True
-        print("Wrong Password! ")
-        return False
+        for usr in cls.all_usernames:
+            if user_name == usr:
+                cls_obj = cls.dictionary[user_name]
+        cls_obj.sign_in_check(user_name, passwd)
 
     dictionary = {}
 
@@ -113,7 +119,7 @@ class User:
             return False
         return True
 
-    def edit_user(self, usr_name: str = None, ph_numb: str = None):
+    def edit_user(self, original_username: str, usr_name: str = None, ph_numb: str = None):
         """
         This method is used for username and/
         phone number editing
@@ -121,6 +127,8 @@ class User:
         , assigning given username and phone number/
         to this instance Attributes
         """
+        if usr_name in User.all_usernames:
+            raise RepUserError("Username already Taken! ")
         if usr_name is not None:
             self.username = usr_name
         if ph_numb is not None:
