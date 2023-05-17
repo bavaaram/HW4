@@ -25,6 +25,18 @@ while 1:
         except ShortPasswordError:
             print("Too Short Password! ")
 
+    elif stat == "2":
+        print("\n************** - Login form - **************\n")
+        try:
+            username = input("Enter Username: ")
+            password = input("Enter Password: ")
+            User.sign_in_validation(username, password)
+            user_object = User.dictionary[username]
+        except UserError:
+            print("Username not Found! ")
+        except PasswordError:
+            print("Wrong Password! ")
+
 
 
 
