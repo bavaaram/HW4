@@ -1,5 +1,7 @@
 #! /usr/bin/python3
-from users import User
+
+from users import User,UserError, PasswordError, TwoPasswordError, ShortPasswordError, RepUserError
+
 
 while 1:
     try:
