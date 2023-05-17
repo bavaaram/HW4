@@ -64,7 +64,7 @@ class User:
         """
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
 
-    def sign_in_validation(self, user_name, passwd):
+    def sign_in_validation(self, user_name: str, passwd: str) -> bool:
         """
         This method is for sign in validation/
         and give username and password/
@@ -87,7 +87,7 @@ class User:
     dictionary = {}
 
     @classmethod
-    def signup(cls, user_name, passwd, ph_numb):
+    def signup(cls, user_name: str, passwd: str, ph_numb: str = None):
         """
         This function is for Signing up users.
         first user must enter username, then enter password
@@ -113,7 +113,7 @@ class User:
             return False
         return True
 
-    def edit_user(self, usr_name=None, ph_numb=None):
+    def edit_user(self, usr_name: str = None, ph_numb: str = None):
         """
         This method is used for username and/
         phone number editing
@@ -126,7 +126,7 @@ class User:
         if ph_numb is not None:
             self.phone_number = ph_numb
 
-    def passwd_change(self, old_pass, new_pass, repeat_new_pass):
+    def passwd_change(self, old_pass: str, new_pass: str, repeat_new_pass: str):
         """
         This function is for password changing.
         if entered old password in not match to original password/
@@ -151,7 +151,7 @@ class User:
         self._username = user_value
 
     @staticmethod
-    def password_check(passwd):
+    def password_check(passwd: str) -> bool:
         """
         This function actually check the password and if its length smaller
         than 4, an ValueError raised with the too short massage
@@ -174,7 +174,7 @@ class User:
         self.__password = passwd_value
 
     @staticmethod
-    def uuid_gen(name):
+    def uuid_gen(name: str) -> str:
         """
         This function generate a universal unique identifier with uuid5
         and use MD5 Hash algorithm
