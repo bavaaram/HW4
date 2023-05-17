@@ -1,6 +1,8 @@
 # 1 /usr/bin/python3
 
 import uuid
+import hashlib
+import getpass
 
 
 class ShortPasswordError(Exception):
@@ -65,6 +67,13 @@ class User:
         return f"\nUser Information:\n\tUsername: {self.username}\n\tPhone Number: {self.phone_number}\n\tUser ID: {self.user_id}"
 
     def sign_in_check(self, user_name, passwd):
+        """
+        This function is for signing in check
+        if entered username and password/
+        are match with original username and
+        password, print Signing in Completed
+        else print Wrong password
+        """
         if (user_name == self.username) and (passwd == self.password):
             print("Signing In Completed! ")
         else:
@@ -119,9 +128,7 @@ class User:
             return False
         return True
 
-    def edit_user(
-        self, original_username: str, usr_name: str = None, ph_numb: str = None
-    ):
+    def edit_user(self, usr_name: str = None, ph_numb: str = None):
         """
         This method is used for username and/
         phone number editing
