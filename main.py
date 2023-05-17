@@ -1,25 +1,34 @@
 #! /usr/bin/python3
 
-from users import User, UserError, PasswordError, TwoPasswordError, ShortPasswordError, RepUserError
+from users import (
+        User,
+        UserError,
+        RepUserError,
+        PasswordError,
+        TwoPasswordError,
+        ShortPasswordError
+        )
 
 
 while 1:
+    print("\n********** - Welcome to user management panel - **********\n")
     try:
-        stat = int(input("Stat (0(Exit) - 1(Sign Up) - 2(Sign In)):   "))
+        stat = input("Stat (0(Exit) - 1(Sign Up) - 2(Sign In)):   ")
     except NameError:
-        print("Invalid State! ")
+        print("\nInvalid State! ")
         continue
 
     if stat == "1":
+        print("\n********** ^ Sign up form ^ **********\n")
         try:
             username = input("Enter Username: ")
             password = input("Enter Password: ")
             phone_number = input("Enter Phone number(Optional): ")
             User.signup(username, password, phone_number)
         except UserError:
-            print("Username Already Taken! ")
+            print("\nUsername Already Taken! ")
         except ShortPasswordError:
-            print("Too Short Password! ")
+            print("\nToo Short Password! ")
 
     elif stat == "2":
         print("\n************** - Login form - **************\n")
@@ -29,9 +38,9 @@ while 1:
             User.sign_in_validation(username, password)
             user_object = User.dictionary[username]
         except UserError:
-            print("Username not Found! ")
+            print("\nUsername not Found! ")
         except PasswordError:
-            print("Wrong Password! ")
+            print("\nWrong Password! ")
 
         while 1:
             print("\n************** - User Dashboard - **************\n")
@@ -48,7 +57,7 @@ while 1:
                     new_phone_number = input("Enter New Phone Number")
                     user_object.edit_user(username, new_username, new_phone_number)
                 except RepUserError:
-                    print("Username already Taken! ")
+                    print("\nUsername already Taken! ")
                     print("\nUser Information has been Updated! ")
 
             elif stat == "3":
@@ -59,9 +68,9 @@ while 1:
                     rep_new_pass = input("Enter New Password again: ")
                     user_object.passwd_change(old_pass, new_pass, rep_new_pass)
                 except ShortPasswordError:
-                    print("Too short password! ")
+                    print("\nToo short password! ")
                 except TwoPasswordError:
-                    print("Two new passwords are not matched! ")
+                    print("\nTwo new passwords are not matched! ")
                 print("\nYour Password has been changed! ")
 
             elif stat == "4":
@@ -73,7 +82,7 @@ while 1:
                 continue
 
     elif stat == "0":
-        print("Exiting the User Management Panel... ")
+        print("\nExiting the User Management Panel... ")
         break
 
     else:
