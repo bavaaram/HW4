@@ -47,6 +47,10 @@ class User:
 
     @staticmethod
     def hashing(passwd: str, salt: str) -> str:
+        """
+        this is a static method that generates hash from a password 
+        and unique salt for each user
+        """
         hashed_pass = hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
         return hashed_pass
 
@@ -57,15 +61,15 @@ class User:
         """
         The __init__ method for assigning attributes
         """
-        self.username, self.password = username, password
+        self.username, self.password = username, password   # assigning username and regular password
         self.user_id = User.uuid_gen(username)
-        self.salt = os.urandom(32)
+        self.salt = os.urandom(32)   # Generate a unique slat for each user
         self.phone_number = phone_number
-        self.password = User.hashing(password, self.salt)
-        User.all_users.append(self)
-        User.all_usernames.append(username)
-        User.all_ids.append(self.user_id)
-        User.all_hashes.append(self.password)
+        self.password = User.hashing(password, self.salt)   # Generating hash for each password
+        User.all_users.append(self)   # storing each user object in a list
+        User.all_usernames.append(username)   # storing each username in a list
+        User.all_ids.append(self.user_id)   # storing each user ID in a list
+        User.all_hashes.append(self.password)   # storing each hashed passwords in a list
 
     def __str__(self):
         """
@@ -80,8 +84,8 @@ class User:
         if entered password is not equal to/
         real password, an error raised
         """
-        new_key = User.hashing(passwd, self.salt)
-        if not new_key == self.password:
+        new_key = User.hashing(passwd, self.salt)   # generating hash from enterd password for login
+        if not new_key == self.password:   # if hashed entered password is not equal to stored hashed password from sign up, an error has been raised
             raise PasswordError("Wrong Password! ")
 
     @classmethod
@@ -115,7 +119,7 @@ class User:
         and finally enter phone number
         """
         obj = cls(user_name, passwd, ph_numb)
-        User.dictionary[obj] = user_name
+        User.dictionary[obj] = user_name   # store user objects as key and usernames as value in a dictionary
 
     @staticmethod
     def get_obj(user_name: str):
@@ -153,12 +157,12 @@ class User:
         if usr_name in User.all_usernames:
             raise RepUserError("Username already Taken! ")
         if usr_name != "":
-            User.all_usernames.remove(self.username)
-            self.username = usr_name
-            User.all_usernames.append(self.username)
-            User.dictionary[self] = usr_name
+            User.all_usernames.remove(self.username) # remove former username from all usernames list
+            self.username = usr_name # assigning new username to desired user object
+            User.all_usernames.append(self.username) # add new username to all usernames list
+            User.dictionary[self] = usr_name # change the value of the user object to new username
         if ph_numb != "":
-            self.phone_number = ph_numb
+            self.phone_number = ph_numb # Assign new phone number to user object
 
     def passwd_change(self, old_pass: str, new_pass: str, rep_new_pass: str):
         """
@@ -167,16 +171,16 @@ class User:
         or new password and Repeat it not match together/
         raise an error.
         """
-        old_key = User.hashing(old_pass, self.salt)
-        new_key = User.hashing(new_pass, self.salt)
-        rep_new_key = User.hashing(rep_new_pass, self.salt)
-        if old_key != self.password:
+        old_key = User.hashing(old_pass, self.salt) # generate a hash from entered old password
+        new_key = User.hashing(new_pass, self.salt) # generate a hsah from entered new password
+        rep_new_key = User.hashing(rep_new_pass, self.salt) # generate a hash from rep_new_password
+        if old_key != self.password: # If entered old password hash is not equal to original hash password, an error raised
             raise PasswordError("Wrong original Password! ")
-        if new_key != rep_new_key:
+        if new_key != rep_new_key: # If new entered password hash is not equal to rep_new_password hash, an error raised
             raise TwoPasswordError("Unmatched new passwords")
-        User.all_hashes.remove(self.password)
-        self.password = new_key
-        User.all_hashes.append(self.password)
+        User.all_hashes.remove(self.password) # if password changing operation is completed, remove old password hash from all_hashes list
+        self.password = new_key # Assigning new password hash to user object password Attribute
+        User.all_hashes.append(self.password) # Ad this new hash to all_hashes list
 
     @property
     def username(self):
