@@ -1,7 +1,8 @@
 # 1 /usr/bin/python3
 
 import uuid
-
+import hashlib
+import os
 
 class ShortPasswordError(Exception):
     """
@@ -44,18 +45,27 @@ class User:
      it assuming to None
     """
 
-    all_users, all_usernames, all_ids = [], [], []
+    @staticmethod
+    def hashing(passwd: str, salt: str) -> str:
+        hashed_pass = hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
+        return hashed_pass
+
+    all_users, all_usernames = [], []
+    all_ids, all_hashes, all_salts = [], [], []
 
     def __init__(self, username: str, password: str, phone_number: str = None):
         """
         The __init__ method for assigning attributes
         """
         self.username, self.password = username, password
-        self.phone_number = phone_number
         self.user_id = User.uuid_gen(username)
+        self.salt = os.urandom(32)
+        self.phone_number = phone_number
+        self.password = User.hashing(password, self.salt)
         User.all_users.append(self)
         User.all_usernames.append(username)
         User.all_ids.append(self.user_id)
+        User.all_hashes.append(self.password)
 
     def __str__(self):
         """
@@ -70,7 +80,8 @@ class User:
         if entered password is not equal to/
         real password, an error raised
         """
-        if not passwd == self.password:
+        new_key = User.hashing(passwd, self.salt)
+        if not new_key == self.password:
             raise PasswordError("Wrong Password! ")
 
     @classmethod
@@ -156,11 +167,16 @@ class User:
         or new password and Repeat it not match together/
         raise an error.
         """
-        if old_pass != self.password:
+        old_key = User.hashing(old_pass, self.salt)
+        new_key = User.hashing(new_pass, self.salt)
+        rep_new_key = User.hashing(rep_new_pass, self.salt)
+        if old_key != self.password:
             raise PasswordError("Wrong original Password! ")
-        if new_pass != rep_new_pass:
+        if new_key != rep_new_key:
             raise TwoPasswordError("Unmatched new passwords")
-        self.password = new_pass
+        User.all_hashes.remove(self.password)
+        self.password = new_key
+        User.all_hashes.append(self.password)
 
     @property
     def username(self):
