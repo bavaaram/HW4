@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-
+from getpass import getpass
 from users import (
         User,
         UserError,
@@ -26,7 +26,7 @@ while 1:
         print("\n********** ^ Sign up form ^ **********\n")
         try:
             username = input("Enter Username: ")
-            password = input("Enter Password: ")
+            password = getpass("Enter Password: ")
             phone_number = input("Enter Phone number(Optional): ")
             User.signup(username, password, phone_number)
         except RepUserError:
@@ -40,7 +40,7 @@ while 1:
         print("\n************** - Login form - **************\n")
         try:
             username = input("Enter Username: ")
-            password = input("Enter Password: ")
+            password = getpass("Enter Password: ")
             USER_OBJECT = User.sign_in_validation(username, password)
         except UserError:
             print("\nUsername not Found! ")
@@ -73,9 +73,9 @@ while 1:
             elif stat == "3":
                 print("\n********** ^ Password Change ^ **********\n")
                 try:
-                    old_pass = input("Enter Old Password: ")
-                    new_pass = input("Enter New Password: ")
-                    rep_new_pass = input("Enter New Password again: ")
+                    old_pass = getpass("Enter Old Password: ")
+                    new_pass = getpass("Enter New Password: ")
+                    rep_new_pass = getpass("Enter New Password again: ")
                     USER_OBJECT.passwd_change(old_pass, new_pass, rep_new_pass)
                 except PasswordError:
                     print("Wrong Original Password! ")
