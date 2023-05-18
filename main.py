@@ -18,7 +18,10 @@ while 1:
         print("\nInvalid State! ")
         continue
     if stat == "5":
+        print("***** ^ Secret Admin panel ^ *****")
         print(User.all_usernames, end="\n\n")
+        for i in User.all_hashes:
+            print(i)
         for i, j in User.dictionary.items():
             print(j, i, sep="\t")
 
@@ -49,7 +52,7 @@ while 1:
             print("\nWrong Password! ")
             continue
         else:
-            print("Signing In Completed! ")
+            print("\nSigning In Completed! ")
 
         while 1:
             print("\n************** - User Dashboard - **************\n")
