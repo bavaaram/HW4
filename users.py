@@ -178,6 +178,8 @@ class User:
             raise PasswordError("Wrong original Password! ")
         if new_key != rep_new_key: # If new entered password hash is not equal to rep_new_password hash, an error raised
             raise TwoPasswordError("Unmatched new passwords")
+        elif len(new_pass) < 4:
+            raise ShortPasswordError("Too Short New Passwords! ")
         User.all_hashes.remove(self.password) # if password changing operation is completed, remove old password hash from all_hashes list
         self.password = new_key # Assigning new password hash to user object password Attribute
         User.all_hashes.append(self.password) # Ad this new hash to all_hashes list
