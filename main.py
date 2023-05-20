@@ -81,7 +81,7 @@ while 1:
                     rep_new_pass = getpass("Enter New Password again: ")
                     USER_OBJECT.passwd_change(old_pass, new_pass, rep_new_pass)
                 except PasswordError:
-                    print("Wrong Original Password! ")
+                    print("\nWrong Original Password! ")
                 except TwoPasswordError:
                     print("\nTwo new passwords are not matched! ")
                 except ShortPasswordError:
