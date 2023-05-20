@@ -66,7 +66,7 @@ while 1:
                 print("if you dont want to change any item, leave it and press Enter.\n")
                 try:
                     new_username = input("Enter New Username: ")
-                    new_phone_number = input("Enter New Phone Number")
+                    new_phone_number = input("Enter New Phone Number: ")
                     USER_OBJECT.edit_user(new_username, new_phone_number)
                 except RepUserError:
                     print("\nUsername already Taken! ")
