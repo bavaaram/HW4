@@ -46,7 +46,7 @@ class User:
     """
 
     @staticmethod
-    def hashing(passwd: str, salt: str) -> str:
+    def hashing(passwd: str, salt: bytes) -> bytes:
         """
         this is a static method that generates hash from a password 
         and unique salt for each user
@@ -219,7 +219,7 @@ class User:
         self.__password = key_value
 
     @staticmethod
-    def uuid_gen(name: str) -> str:
+    def uuid_gen(name: str) -> uuid:
         """
         This function generate a universal unique identifier with uuid5
         and use MD5 Hash algorithm
