@@ -1,4 +1,4 @@
-# 1 /usr/bin/python3
+#! /usr/bin/python3
 
 import uuid
 import hashlib
@@ -48,7 +48,7 @@ class User:
     """
 
     @staticmethod
-    def hashing(passwd: str, salt: str) -> str:
+    def hashing(passwd: str, salt: bytes) -> bytes:
         """
         this is a static method that generates hash from a password
         and unique salt for each user
@@ -63,11 +63,10 @@ class User:
         """
         The __init__ method for assigning attributes
         """
+        self.salt = os.urandom(32)   # Generate a unique slat for each user
         self.username, self.password = username, password   # assigning username and regular password
         self.user_id = User.uuid_gen(username)
-        self.salt = os.urandom(32)   # Generate a unique slat for each user
         self.phone_number = phone_number
-        self.password = User.hashing(password, self.salt)   # Generating hash for each password
         User.all_users.append(self)   # storing each user object in a list
         User.all_usernames.append(username)   # storing each username in a list
         User.all_ids.append(self.user_id)   # storing each user ID in a list
@@ -180,14 +179,12 @@ class User:
         raise an error.
         """
         old_key = User.hashing(old_pass, self.salt)  # generate a hash from entered old password
-        new_key = User.hashing(new_pass, self.salt)  # generate a hsah from entered new password
-        rep_new_key = User.hashing(rep_new_pass, self.salt)  # generate a hash from rep_new_password
         if old_key != self.password:  # If entered old password hash is not equal to original hash password, an error raised
             raise PasswordError("Wrong original Password! ")
-        if new_key != rep_new_key:  # If new entered password hash is not equal to rep_new_password hash, an error raised
+        if new_pass != rep_new_pass:  # If new entered password hash is not equal to rep_new_password hash, an error raised
             raise TwoPasswordError("Unmatched new passwords")
-        User.all_hashes.remove(self.password)  # if password changing operation is completed, remove old password hash from all_hashes list
-        self.password = new_key  # Assigning new password hash to user object password Attribute
+        self.password = new_pass  # Assigning new password hash to user object password Attribute
+        User.all_hashes.remove(old_key)  # if password changing operation is completed, remove old password hash from all_hashes list
         User.all_hashes.append(self.password)  # Ad this new hash to all_hashes list
 
     @property
@@ -224,10 +221,11 @@ class User:
     def password(self, passwd_value):
         if not User.password_check(passwd_value):
             raise ShortPasswordError("Too short Password! ")
-        self.__password = passwd_value
+        key_value = User.hashing(passwd_value, self.salt)
+        self.__password = key_value
 
     @staticmethod
-    def uuid_gen(name: str) -> str:
+    def uuid_gen(name: str) -> uuid:
         """
         This function generate a universal unique identifier with uuid5
         and use MD5 Hash algorithm
